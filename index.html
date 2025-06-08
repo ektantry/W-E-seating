@@ -16,7 +16,6 @@
       padding: 0;
       background: #fdfdfb;
       color: #374151;
-      overflow-x: hidden;
     }
 
     header {
@@ -46,21 +45,33 @@
       top: 0;
       background-color: #f9faf8ee;
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
       align-items: center;
       padding: 0.6rem 1rem;
       border-bottom: 1px solid #e5ece6;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
       z-index: 999;
       gap: 0.5rem;
+      overflow-x: auto;
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+  .sticky-bar.hide {
+      transform: translateY(-100%);
     }
 
     nav {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
+      flex-wrap: nowrap;
       gap: 0.3rem;
+      overflow-x:auto;
+      white-space: nowrap;
+      flex: 1;
+      scrollbar-width: none;
+      width: 100%;
+    }
+
+    nav::-webkit-scrollbar {
+      display: none;
     }
 
     nav a {
@@ -72,6 +83,7 @@
       padding: 0.4rem 0.9rem;
       border-radius: 4px;
       transition: background-color 0.2s ease, transform 0.2s ease;
+      flex: 0 0 auto;
     }
 
     nav a:hover {
@@ -241,7 +253,7 @@
     </p>
   </header>
 
-  <div class="sticky-bar">
+  <div class="sticky-bar" id="stickyBar">
     <nav>
       <a href="#A">A</a><a href="#B">B</a><a href="#C">C</a><a href="#D">D</a>
       <a href="#E">E</a><a href="#G">G</a><a href="#H">H</a><a href="#J">J</a>
@@ -539,6 +551,26 @@
     function closeOverlay() {
       document.getElementById('overlay').style.display = 'none';
     }
+    // Animate sticky nav on scroll
+    let lastScrollTop = 0;
+    const stickyBar = document.getElementById('stickyBar');
+
+    window.addEventListener('scroll', function () {
+      const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+      const stickyTop = stickyBar.getBoundingClientRect().top;
+
+      if (stickyTop <= 0) {
+        if (currentScroll > lastScrollTop) {
+          stickyBar.classList.add('hide');
+        } else {
+          stickyBar.classList.remove('hide');
+        }
+      } else {
+        stickyBar.classList.remove('hide');
+      }
+
+      lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+    }, false);
   </script>
 </body>
 </html>
