@@ -154,7 +154,7 @@
     }
 
     li:hover {
-      transform: translateY(-2px);
+      /* transform: translateY(-2px); */
       background-color: #f8faf8;
     }
 
@@ -178,7 +178,7 @@
     .highlight {
       background-color: #bfd8c1;
     }
-
+/* 
     .overlay {
       position: fixed;
       top: 0; left: 0;
@@ -203,7 +203,7 @@
     .overlay-content svg {
       width: 100%;
       height: auto;
-    }
+    } */
 
     .close-btn {
       position: absolute;
@@ -248,7 +248,7 @@
   <header>
     <h1>Find Your Seat</h1>
     <p class="instructions">
-      Find your name alphabetically and check your table number. We're so glad you're here to celebrate with us.
+      Search by last name alphabetical order. We're so glad you're here to celebrate with us!
     </p>
   </header>
 
@@ -518,38 +518,38 @@
       });
     });
 
-    document.querySelectorAll('.guest-list li').forEach(li => {
-      li.addEventListener('click', () => {
-        const table = parseInt(li.getAttribute('data-table'));
-        const overlay = document.getElementById('overlay');
-        const svg = overlay.querySelector('svg');
-        svg.innerHTML = '<rect x="250" y="150" width="100" height="100" fill="#f1f5f9" />';
-        for (let i = 0; i < 14; i++) {
-          const angle = (i / 14) * 2 * Math.PI;
-          const radius = 180;
-          const cx = 300 + radius * Math.cos(angle);
-          const cy = 200 + radius * Math.sin(angle);
-          const fill = (i + 1) === table ? '#047857' : '#d1fae5';
-          const tableEl = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-          tableEl.setAttribute('cx', cx);
-          tableEl.setAttribute('cy', cy);
-          tableEl.setAttribute('r', 30);
-          tableEl.setAttribute('fill', fill);
-          tableEl.setAttribute('id', `table-${i+1}`);
-          tableEl.setAttribute('stroke', '#444');
-          tableEl.setAttribute('stroke-width', '1');
-          tableEl.addEventListener('mouseleave', () => {
-            tableEl.setAttribute('fill', (i + 1) === table ? '#047857' : '#d1fae5');
-          });
-          svg.appendChild(tableEl);
-        }
-        overlay.style.display = 'flex';
-      });
-    });
+    // document.querySelectorAll('.guest-list li').forEach(li => {
+    //   li.addEventListener('click', () => {
+    //     const table = parseInt(li.getAttribute('data-table'));
+    //     const overlay = document.getElementById('overlay');
+    //     const svg = overlay.querySelector('svg');
+    //     svg.innerHTML = '<rect x="250" y="150" width="100" height="100" fill="#f1f5f9" />';
+    //     for (let i = 0; i < 14; i++) {
+    //       const angle = (i / 14) * 2 * Math.PI;
+    //       const radius = 180;
+    //       const cx = 300 + radius * Math.cos(angle);
+    //       const cy = 200 + radius * Math.sin(angle);
+    //       const fill = (i + 1) === table ? '#047857' : '#d1fae5';
+    //       const tableEl = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    //       tableEl.setAttribute('cx', cx);
+    //       tableEl.setAttribute('cy', cy);
+    //       tableEl.setAttribute('r', 30);
+    //       tableEl.setAttribute('fill', fill);
+    //       tableEl.setAttribute('id', `table-${i+1}`);
+    //       tableEl.setAttribute('stroke', '#444');
+    //       tableEl.setAttribute('stroke-width', '1');
+    //       tableEl.addEventListener('mouseleave', () => {
+    //         tableEl.setAttribute('fill', (i + 1) === table ? '#047857' : '#d1fae5');
+    //       });
+    //       svg.appendChild(tableEl);
+    //     }
+    //     overlay.style.display = 'flex';
+    //   });
+    // });
 
-    function closeOverlay() {
-      document.getElementById('overlay').style.display = 'none';
-    }
+    // function closeOverlay() {
+    //   document.getElementById('overlay').style.display = 'none';
+    // }
     // Animate sticky nav on scroll
     let lastScrollTop = 0;
     const stickyBar = document.getElementById('stickyBar');
