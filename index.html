@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Evelyne & William's Wedding</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Nunito:wght@400;600&family=Playfair+Display:wght@500&display=swap" rel="stylesheet">
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #fdfdfb;
+      color: #374151;
+      overflow-x: hidden;
+    }
+
+    header {
+      background: linear-gradient(to right, #f4f1ec, #e5ece6);
+      text-align: center;
+      padding: 3rem 1rem 3rem;
+    }
+
+    h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3.8rem;
+      color: #466049;
+      margin-bottom: 1rem;
+    }
+
+    p.instructions {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      max-width: 700px;
+      margin: 0 auto;
+      color: #6f7c6b;
+      line-height: 1.6;
+    }
+
+    .sticky-bar {
+      position: sticky;
+      top: 0;
+      background-color: #f9faf8ee;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      padding: 0.6rem 1rem;
+      border-bottom: 1px solid #e5ece6;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+      z-index: 999;
+      gap: 0.5rem;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.3rem;
+    }
+
+    nav a {
+      margin: 0.3rem;
+      color: #47624f;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0.4rem 0.9rem;
+      border-radius: 4px;
+      transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+
+    nav a:hover {
+      background-color: #dfece5;
+    }
+
+    .search-toggle {
+      margin-left: 0.5rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .search-container {
+      display: none;
+      padding-left: 0.5rem;
+    }
+
+    .search-container input {
+      width: 200px;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      border: 1px solid #d1d5db;
+      font-size: 1rem;
+    }
+
+    .guest-list {
+      max-width: 750px;
+      margin: 2rem auto 3rem;
+      padding: 0 1rem;
+    }
+
+    .letter-group {
+      margin-bottom: 3rem;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeIn 0.8s ease forwards;
+    }
+
+    .letter-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 500;
+      color: #3a4c3f;
+      border-bottom: 1px dashed #cbd5c0;
+      margin-bottom: 1.2rem;
+      padding-bottom: 0.5rem;
+      text-align: left;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      background-color: #ffffff;
+      border-radius: 4px;
+      padding: 1rem 1.25rem;
+      margin: 0.6rem 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.035);
+      border: 1px solid #e4ebe4;
+      transition: transform 0.2s ease, background-color 0.3s ease;
+    }
+
+    li:hover {
+      transform: translateY(-2px);
+      background-color: #f8faf8;
+    }
+
+    span.name {
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: #2f3e34;
+    }
+
+    .table-label {
+      background-color: #cce3c4;
+      color: #2f3e34;
+      padding: 0.4rem 0.9rem;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border: 1px solid #c9dcca;
+      font-family: 'Nunito', sans-serif;
+    }
+
+    .highlight {
+      background-color: #bfd8c1;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .overlay-content {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 10px;
+      max-width: 700px;
+      width: 90%;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      position: relative;
+    }
+
+    .overlay-content svg {
+      width: 100%;
+      height: auto;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #444;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    @media (max-width: 600px) {
+      nav {
+        font-size: 0.8rem;
+        justify-content: center;
+      }
+
+      li {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.4rem;
+      }
+
+      .table-label {
+        align-self: flex-end;
+      }
+
+      .search-wrapper.expanded input {
+        width: 150px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Find Your Seat</h1>
+    <p class="instructions">
+      Find your name alphabetically and check your table number. We're so glad you're here to celebrate with us.
+    </p>
+  </header>
+
+  <div class="sticky-bar">
+    <nav>
+      <a href="#A">A</a><a href="#B">B</a><a href="#C">C</a><a href="#D">D</a>
+      <a href="#E">E</a><a href="#G">G</a><a href="#H">H</a><a href="#J">J</a>
+      <a href="#K">K</a><a href="#L">L</a><a href="#M">M</a><a href="#N">N</a>
+      <a href="#O">O</a><a href="#P">P</a><a href="#R">R</a><a href="#S">S</a>
+      <a href="#T">T</a><a href="#U">U</a><a href="#W">W</a><a href="#Y">Y</a>
+      <a href="#Z">Z</a>
+    </nav>
+    <button class="search-toggle" onclick="toggleSearch()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <circle cx="10" cy="10" r="6" stroke="#4b5563" stroke-width="2"/>
+        <line x1="15" y1="15" x2="22" y2="22" stroke="#4b5563" stroke-width="2"/>
+      </svg>
+    </button>
+    <div class="search-container" id="searchContainer">
+      <input type="text" id="search" placeholder="Search for a guest name..." />
+    </div>
+  </div>
+
+  <div class="guest-list" id="guest-list">
+    <div class="letter-group" id="A">
+      <div class="letter-heading">A</div>
+      <ul>
+        <li data-table="9"><span class="name">Sarah Abraham</span> <span class="table-label">Table 9</span></li>
+        <li data-table="9"><span class="name">Angela Addison</span> <span class="table-label">Table 9</span></li>
+        <li data-table="9"><span class="name">Hannah Addison</span> <span class="table-label">Table 9</span></li>
+        <li data-table="4"><span class="name">Lynne Allen</span> <span class="table-label">Table 4</span></li>
+        <li data-table="5"><span class="name">Kevin Anggono</span> <span class="table-label">Table 5</span></li>
+        <li data-table="7"><span class="name">Kristin Ashley</span> <span class="table-label">Table 7</span></li>
+      </ul>
+    </div>
+    <div class="letter-group" id="B">
+      <div class="letter-heading">B</div>
+      <ul>
+        <li data-table="5"><span class="name">Fanny Baisia</span> <span class="table-label">Table 5</span></li>
+        <li data-table="10"><span class="name">Suyang Bao</span> <span class="table-label">Table 10</span></li>
+        <li data-table="10"><span class="name">Ben Belfort</span> <span class="table-label">Table 10</span></li>
+        <li data-table="2"><span class="name">Michael Bertucci</span> <span class="table-label">Table 2</span></li>
+        <li data-table="2"><span class="name">Mary Bertucci</span> <span class="table-label">Table 2</span></li>
+        <li data-table="10"><span class="name">Alex Brown</span> <span class="table-label">Table 10</span></li>
+        <li data-table="8"><span class="name">Cameron Burris</span> <span class="table-label">Table 8</span></li>
+        <li data-table="8"><span class="name">Kelly Burris</span> <span class="table-label">Table 8</span></li>
+      </ul>
+    </div>
+    <div class="letter-group" id="C">
+      <div class="letter-heading">C</div>
+      <ul>
+        <li data-table="11"><span class="name">Christina Chacko</span> <span class="table-label">Table 11</span></li>
+        <li data-table="11"><span class="name">Justin Chacko</span> <span class="table-label">Table 11</span></li>
+        <li data-table="12"><span class="name">Peyshyuan Chin</span> <span class="table-label">Table 12</span></li>
+        <li data-table="13"><span class="name">Victoria Chong</span> <span class="table-label">Table 13</span></li>
+      </ul>
+    </div>    
+    <div class="letter-group" id="D">
+      <div class="letter-heading">D</div>
+      <ul>
+        <li data-table="1"><span class="name">Marlene DeBois</span> <span class="table-label">Table 1</span></li>
+        <li data-table="1"><span class="name">Louis DeBois</span> <span class="table-label">Table 1</span></li>
+        <li data-table="2"><span class="name">Sheri DeBois</span> <span class="table-label">Table 2</span></li>
+      </ul>
+    </div>
+    <div class="letter-group" id="E">
+        <div class="letter-heading">E</div>
+        <ul>
+          <li data-table="9"><span class="name">Michaela Ellis</span> <span class="table-label">Table 9</span></li>
+          <li data-table="1"><span class="name">Bob Eskew</span> <span class="table-label">Table 1</span></li>
+          <li data-table="4"><span class="name">Cindy Eskew</span> <span class="table-label">Table 4</span></li>
+          <li data-table="6"><span class="name">Erin Eskew</span> <span class="table-label">Table 6</span></li>
+          <li data-table="4"><span class="name">Gary Eskew</span> <span class="table-label">Table 4</span></li>
+          <li data-table="2"><span class="name">Karen Eskew</span> <span class="table-label">Table 2</span></li>
+          <li data-table="1"><span class="name">Michelle Eskew</span> <span class="table-label">Table 1</span></li>
+        </ul>
+      </div>
+      <div class="letter-group" id="G">
+        <div class="letter-heading">G</div>
+        <ul>
+          <li data-table="12"><span class="name">Alex Garza</span> <span class="table-label">Table 12</span></li>
+          <li data-table="12"><span class="name">Ian Garza</span> <span class="table-label">Table 12</span></li>
+          <li data-table="3"><span class="name">Anna Gu</span> <span class="table-label">Table 3</span></li>
+          <li data-table="3"><span class="name">Teddy Gu</span> <span class="table-label">Table 3</span></li>
+        </ul>
+      </div>
+      <div class="letter-group" id="H">
+        <div class="letter-heading">H</div>
+        <ul>
+          <li data-table="3"><span class="name">Budi Halim</span> <span class="table-label">Table 3</span></li>
+          <li data-table="4"><span class="name">Lee J Henderson</span> <span class="table-label">Table 4</span></li>
+          <li data-table="4"><span class="name">Marta Henderson</span> <span class="table-label">Table 4</span></li>
+          <li data-table="13"><span class="name">Lydia Huang</span> <span class="table-label">Table 13</span></li>
+        </ul>
+      </div>
+      <div class="letter-group" id="J">
+        <div class="letter-heading">J</div>
+        <ul>
+          <li data-table="2"><span class="name">Mark Jones</span> <span class="table-label">Table 2</span></li>
+          <li data-table="6"><span class="name">Matthew Jones</span> <span class="table-label">Table 6</span></li>
+          <li data-table="2"><span class="name">Melissa Jones</span> <span class="table-label">Table 2</span></li>
+          <li data-table="6"><span class="name">Nick Jones</span> <span class="table-label">Table 6</span></li>
+          <li data-table="6"><span class="name">Nicole Jones</span> <span class="table-label">Table 6</span></li>
+          <li data-table="6"><span class="name">Theo Jones</span> <span class="table-label">Table 6</span></li>
+        </ul>
+      </div>
+      <div class="letter-group" id="K">
+        <div class="letter-heading">K</div>
+        <ul>
+          <li data-table="7"><span class="name">Peter Kim</span> <span class="table-label">Table 7</span></li>
+          <li data-table="8"><span class="name">Laila Koduri</span> <span class="table-label">Table 8</span></li>
+        </ul>
+      </div>
+      <div class="letter-group" id="L">
+        <div class="letter-heading">L</div>
+        <ul>
+          <li data-table="12"><span class="name">Daniel Liaou</span> <span class="table-label">Table 12</span></li>
+          <li data-table="1"><span class="name">Caroline Lingga</span> <span class="table-label">Table 1</span></li>
+          <li data-table="10"><span class="name">Jasmine Little</span> <span class="table-label">Table 10</span></li>
+          <li data-table="10"><span class="name">Will Little</span> <span class="table-label">Table 10</span></li>
+          <li data-table="13"><span class="name">Judy Liu</span> <span class="table-label">Table 13</span></li>
+          <li data-table="12"><span class="name">Ariel Lyons-Warren</span> <span class="table-label">Table 12</span></li>
+        </ul>
+      </div>
+      <div class="letter-group" id="M">
+        <div class="letter-heading">M</div>
+        <ul>
+          <li data-table="6"><span class="name">Joe Marcy</span> <span class="table-label">Table 6</span></li>
+          <li data-table="11"><span class="name">Natalie Mitchell</span> <span class="table-label">Table 11</span></li>
+          <li data-table="11"><span class="name">Andrew Mitchell</span> <span class="table-label">Table 11</span></li>
+          <li data-table="11"><span class="name">Janae Moore</span> <span class="table-label">Table 11</span></li>
+          <li data-table="11"><span class="name">Cooper Moore</span> <span class="table-label">Table 11</span></li>
+          <li data-table="8"><span class="name">Rohan Morenas</span> <span class="table-label">Table 8</span></li>
+          <li data-table="10"><span class="name">Lane Murphy</span> <span class="table-label">Table 10</span></li>
+        </ul>
+      </div>
+      <div class="letter-group" id="N">
+        <div class="letter-heading">N</div>
+        <ul>
+          <li data-table="8"><span class="name">Harry Nanthakumar</span> <span class="table-label">Table 8</span></li>
+          <li data-table="7"><span class="name">Austin Newberry</span> <span class="table-label">Table 7</span></li>
+          <li data-table="7"><span class="name">Trisha Newberry</span> <span class="table-label">Table 7</span></li>
+        </ul>
+      </div>
+      <div class="letter-group" id="O">
+        <div class="letter-heading">O</div>
+        <ul>
+          <li data-table="7"><span class="name">Joshua Ortiz</span> <span class="table-label">Table 7</span></li>
+        </ul>
+      </div>
+      <div class="letter-group" id="P">
+        <div class="letter-heading">P</div>
+        <ul>
+          <li data-table="4"><span class="name">Tammy Padgett</span> <span class="table-label">Table 4</span></li>
+          <li data-table="11"><span class="name">Antonio Pagan</span> <span class="table-label">Table 11</span></li>
+          <li data-table="11"><span class="name">Paula Pagan</span> <span class="table-label">Table 11</span></li>
+          <li data-table="13"><span class="name">Lon Kai Pang</span> <span class="table-label">Table 13</span></li>
+          <li data-table="5"><span class="name">Magdalena Paparang</span> <span class="table-label">Table 5</span></li>
+          <li data-table="8"><span class="name">Ricky Paramo</span> <span class="table-label">Table 8</span></li>
+          <li data-table="12"><span class="name">Matea Paveskovic</span> <span class="table-label">Table 12</span></li>
+        </ul>
+      </div>
+      <div class="letter-group" id="R">
+        <div class="letter-heading">R</div>
+        <ul>
+          <li data-table="7"><span class="name">George Razzo</span> <span class="table-label">Table 7</span></li>
+          <li data-table="7"><span class="name">Tiffany Razzo</span> <span class="table-label">Table 7</span></li>
+          <li data-table="10"><span class="name">Juan Romero</span> <span class="table-label">Table 10</span></li>
+        </ul>
+      </div>
+      <div class="letter-group" id="S">
+        <div class="letter-heading">S</div>
+        <ul>
+          <li data-table="12"><span class="name">Jose Luis Salazar</span> <span class="table-label">Table 12</span></li>
+          <li data-table="9"><span class="name">Ronald Samuel</span> <span class="table-label">Table 9</span></li>
+          <li data-table="8"><span class="name">Brandon Sedgewick</span> <span class="table-label">Table 8</span></li>
+          <li data-table="1"><span class="name">Annie Sia</span> <span class="table-label">Table 1</span></li>
+          <li data-table="12"><span class="name">Snigdha Srivastava</span> <span class="table-label">Table 12</span></li>
+          <li data-table="5"><span class="name">Patrix Stanley</span> <span class="table-label">Table 5</span></li>
+        </ul>
+      </div>
+      <div class="letter-group" id="T">
+        <div class="letter-heading">T</div>
+        <ul>
+          <li data-table="3"><span class="name">Andrew Tan</span> <span class="table-label">Table 3</span></li>
+          <li data-table="3"><span class="name">Silvoni Tan</span> <span class="table-label">Table 3</span></li>
+          <li data-table="5"><span class="name">So Jan Tan</span> <span class="table-label">Table 5</span></li>
+          <li data-table="3"><span class="name">Suei Eng Tan</span> <span class="table-label">Table 3</span></li>
+          <li data-table="1"><span class="name">Kareantho Tantri</span> <span class="table-label">Table 1</span></li>
+          <li data-table="3"><span class="name">Emmeline Tantry</span> <span class="table-label">Table 3</span></li>
+          <li data-table="5"><span class="name">Heriantho Tantry</span> <span class="table-label">Table 5</span></li>
+          <li data-table="3"><span class="name">Irene Tantry</span> <span class="table-label">Table 3</span></li>
+          <li data-table="5"><span class="name">Rachel Tantry</span> <span class="table-label">Table 5</span></li>
+          <li data-table="1"><span class="name">Ruddyantho Tantry</span> <span class="table-label">Table 1</span></li>
+          <li data-table="5"><span class="name">Yenny Tantry</span> <span class="table-label">Table 5</span></li>
+          <li data-table="10"><span class="name">Victoria Torgersen</span> <span class="table-label">Table 10</span></li>
+          <li data-table="9"><span class="name">Aaron Trevino</span> <span class="table-label">Table 9</span></li>
+        </ul>
+      </div>
+    <div class="letter-group" id="U">
+      <div class="letter-heading">U</div>
+      <ul>
+        <li data-table="9"><span class="name">Andres Urias</span> <span class="table-label">Table 9</span></li>
+        <li data-table="9"><span class="name">Katherine Urias</span> <span class="table-label">Table 9</span></li>
+      </ul>
+    </div>
+    <div class="letter-group" id="W">
+      <div class="letter-heading">W</div>
+      <ul>
+        <li data-table="2"><span class="name">Michael Wadycki</span> <span class="table-label">Table 2</span></li>
+      </ul>
+    </div>
+    <div class="letter-group" id="Y">
+      <div class="letter-heading">Y</div>
+      <ul>
+        <li data-table="13"><span class="name">Annie Yang</span> <span class="table-label">Table 13</span></li>
+      </ul>
+    </div>
+    <div class="letter-group" id="Z">
+      <div class="letter-heading">Z</div>
+      <ul>
+        <li data-table="13"><span class="name">Shelly Zhou</span> <span class="table-label">Table 13</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="overlay" id="overlay">
+    <div class="overlay-content">
+      <button class="close-btn" onclick="closeOverlay()">&times;</button>
+      <svg viewBox="0 0 600 400">
+        <rect x="250" y="150" width="100" height="100" fill="#f1f5f9" />
+      </svg>
+    </div>
+  </div>
+
+  <script>
+    const searchInput = document.getElementById('search');
+    const guestList = document.getElementById('guest-list');
+
+    function toggleSearch() {
+      const container = document.getElementById('searchContainer');
+      container.style.display = container.style.display === 'flex' ? 'none' : 'flex';
+    }
+
+    searchInput.addEventListener('input', () => {
+      const query = searchInput.value.toLowerCase();
+      const names = guestList.querySelectorAll('li');
+
+      names.forEach(li => {
+        const nameSpan = li.querySelector('.name');
+        const name = nameSpan.textContent.toLowerCase();
+        if (name.includes(query)) {
+          li.style.display = '';
+          const matchIndex = name.indexOf(query);
+          const originalName = nameSpan.textContent;
+          nameSpan.innerHTML = originalName.substring(0, matchIndex) + '<span class="highlight">' + originalName.substring(matchIndex, matchIndex + query.length) + '</span>' + originalName.substring(matchIndex + query.length);
+        } else {
+          li.style.display = 'none';
+          nameSpan.innerHTML = nameSpan.textContent; // remove highlighting
+        }
+      });
+
+      const sections = guestList.querySelectorAll('.letter-group');
+      sections.forEach(section => {
+        const visible = Array.from(section.querySelectorAll('li')).some(li => li.style.display !== 'none');
+        section.style.display = visible ? '' : 'none';
+      });
+    });
+
+    document.querySelectorAll('.guest-list li').forEach(li => {
+      li.addEventListener('click', () => {
+        const table = parseInt(li.getAttribute('data-table'));
+        const overlay = document.getElementById('overlay');
+        const svg = overlay.querySelector('svg');
+        svg.innerHTML = '<rect x="250" y="150" width="100" height="100" fill="#f1f5f9" />';
+        for (let i = 0; i < 14; i++) {
+          const angle = (i / 14) * 2 * Math.PI;
+          const radius = 180;
+          const cx = 300 + radius * Math.cos(angle);
+          const cy = 200 + radius * Math.sin(angle);
+          const fill = (i + 1) === table ? '#047857' : '#d1fae5';
+          const tableEl = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+          tableEl.setAttribute('cx', cx);
+          tableEl.setAttribute('cy', cy);
+          tableEl.setAttribute('r', 30);
+          tableEl.setAttribute('fill', fill);
+          tableEl.setAttribute('id', `table-${i+1}`);
+          tableEl.setAttribute('stroke', '#444');
+          tableEl.setAttribute('stroke-width', '1');
+          tableEl.addEventListener('mouseleave', () => {
+            tableEl.setAttribute('fill', (i + 1) === table ? '#047857' : '#d1fae5');
+          });
+          svg.appendChild(tableEl);
+        }
+        overlay.style.display = 'flex';
+      });
+    });
+
+    function closeOverlay() {
+      document.getElementById('overlay').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
